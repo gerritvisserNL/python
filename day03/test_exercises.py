@@ -54,6 +54,7 @@ def test_merge_scores_does_not_change_input():
 
 def test_group_by_length():
     assert group_by_length(["cat", "horse", "dog"]) == {3: ["cat", "dog"], 5: ["horse"]}
+    assert group_by_length(["cat", "dog", "cat"]) == {3: ["cat", "dog", "cat"]}
     assert group_by_length([]) == {}
 
 

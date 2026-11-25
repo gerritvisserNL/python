@@ -66,17 +66,12 @@ def word_count(text):
 
     Hint: start with an empty dict. Is the word new? Then its count starts at 1.
     """
-    words_count = {}
-
-    if text == "":
-        return words_count
+    counts = {}
 
     for word in text.split():
-        if word not in words_count:
-            words_count[word] = 1
-        else:
-            words_count[word] += 1
-    return words_count
+        counts[word] = counts.get(word, 0) + 1
+
+    return counts
 
 
 # 3. Loop + lookup ------------------------------------------------------------
@@ -89,21 +84,12 @@ def total_cost(prices, cart):
     >>> total_cost({"apple": 0.5, "bread": 2.0}, ["apple", "bread", "apple"])
     3.0
     """
-
-    if cart == []:
-        return "Cart is empty!"
-
-    cart_items = {}
-    total_price = 
+    total = 0
 
     for item in cart:
-        if item not in cart_items:
-            cart_items[item] = 1
-        else:
-            cart_items[item] += 1
+        total += prices[item]
 
-    
-
+    return total
 
 
 # 4. Looping over items() -----------------------------------------------------
@@ -115,7 +101,13 @@ def invert(mapping):
     >>> invert({"a": 1, "b": 2})
     {1: 'a', 2: 'b'}
     """
-    raise NotImplementedError
+
+    inverted = {}
+
+    for key, value in mapping.items():
+        inverted[value] = key
+
+    return inverted
 
 
 # 5. No side effects ----------------------------------------------------------
@@ -129,7 +121,12 @@ def merge_scores(first, second):
 
     Hint: start from a copy of first, then add the scores from second.
     """
-    raise NotImplementedError
+    merged = dict(first)
+
+    for name, score in second.items():
+        merged[name] = merged.get(name, 0) + score
+
+    return merged
 
 
 # 6. A dict of lists ----------------------------------------------------------
@@ -143,7 +140,16 @@ def group_by_length(words):
 
     Hint: same pattern as word_count(), but the value is a list.
     """
-    raise NotImplementedError
+    groups = {}
+
+    for word in words:
+        length = len(word)
+        if length not in groups:
+            groups[length] = [word]
+        else:
+            groups[length].append(word)
+
+    return groups
 
 
 # 7. Sets ---------------------------------------------------------------------
@@ -155,7 +161,7 @@ def unique_letters(text):
     >>> unique_letters("Hello World")
     7
     """
-    raise NotImplementedError
+    return len(set(text.lower().replace(" ", "")))
 
 
 # 8. Set operations -----------------------------------------------------------
@@ -167,7 +173,8 @@ def common_items(first, second):
     >>> common_items([3, 1, 2, 3], [2, 3, 4])
     [2, 3]
     """
-    raise NotImplementedError
+
+    return sorted(set(first) & set(second))
 
 
 # 9. BONUS: reuse + tie -------------------------------------------------------
@@ -184,4 +191,15 @@ def most_common_word(text):
 
     Hint: reuse word_count(). Then think about day 2's longest_word().
     """
-    raise NotImplementedError
+
+    counts = word_count(text)
+
+    best_count = 0
+    best_word = ""
+
+    for word, count in counts.items():
+        if count > best_count:
+            best_count = count
+            best_word = word
+
+    return best_word
